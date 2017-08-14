@@ -9,12 +9,12 @@ public class CalculatorTest {
     @Test
     public void testAddTwoNumbers() throws Exception {
         Calculator calculator = new Calculator();
-        assertEquals(calculator.add(4, 4), 8);
+        assertEquals(8, calculator.add(4, 4));
     }
 
     @Test
     public void testAddTwoDifferentNumbers() throws Exception {
         Calculator calculator = new Calculator();
-        assertEquals(calculator.add(4, 10), 14);
+        assertEquals(14, calculator.add(4, 10));
     }
 }
