@@ -7,7 +7,6 @@ import org.junit.rules.ExpectedException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 public class CaesarShiftTest {
@@ -125,9 +124,6 @@ public class CaesarShiftTest {
 		assertThat(cs.encode("a")).isEqualTo("z");
 	}
 
-	//test more than 1 character
-	//decode
-
 	@Test
 	public void testDecodeEmptyStringWithShiftOf0() {
 		CaesarShift cs = new CaesarShift(0);
@@ -164,5 +160,35 @@ public class CaesarShiftTest {
 	public void testDecodeSpecialCharacterWithAShiftOf1() {
 		CaesarShift cs = new CaesarShift(1);
 		assertThat(cs.decode("!")).isEqualTo("!");
+	}
+
+	@Test
+	public void testEncodeStringShiftOf0() {
+		CaesarShift cs = new CaesarShift(0);
+		assertThat(cs.encode("Hello")).isEqualTo("Hello");
+	}
+
+	@Test
+	public void testEncodeStringShiftOf1() {
+		CaesarShift cs = new CaesarShift(1);
+		assertThat(cs.encode("Hello")).isEqualTo("Ifmmp");
+	}
+
+	@Test
+	public void testDecodeStringShiftOf0() {
+		CaesarShift cs = new CaesarShift(0);
+		assertThat(cs.decode("Ifmmp")).isEqualTo("Ifmmp");
+	}
+
+	@Test
+	public void testDecodeStringShiftOf1() {
+		CaesarShift cs = new CaesarShift(1);
+		assertThat(cs.decode("Ifmmp")).isEqualTo("Hello");
+	}
+
+	@Test
+	public void testEncodeDecodeStringShiftOf4() {
+		CaesarShift cs = new CaesarShift(4);
+		assertThat(cs.decode(cs.encode("Hello World!"))).isEqualTo("Hello World!");
 	}
 }

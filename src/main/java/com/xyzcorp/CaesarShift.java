@@ -1,6 +1,7 @@
 package com.xyzcorp;
 
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class CaesarShift {
     public static final String THE_STRING_CANNOT_BE_NULL_MSG =
@@ -11,24 +12,27 @@ public class CaesarShift {
         this.shift = shift;
     }
 
-    public char encodeChar(char c, int actualShift) {
+    private char encodeChar(char c, int actualShift) {
         if (!Character.isAlphabetic(c)) return c;
         char BEST_A = Character.isUpperCase(c) ? 'A' : 'a';
         return (char)((c + actualShift % 26 + 26 - BEST_A) % 26 + BEST_A);
     }
 
-    public String encode(String s) {
+    private String encodeString(String s, int actualShift) {
         Objects.requireNonNull(s, THE_STRING_CANNOT_BE_NULL_MSG);
         if (s.isEmpty()) return s;
-        char c = s.charAt(0);
-        return "" + encodeChar(c, shift);
+        return s.chars()
+                .boxed()
+                .map((Integer i) -> "" + encodeChar((char) i.intValue(), actualShift))
+                .collect(Collectors.joining());
+    }
+
+    public String encode(String s) {
+        return encodeString(s, shift);
     }
 
     public String decode(String s) {
-        Objects.requireNonNull(s, THE_STRING_CANNOT_BE_NULL_MSG);
-        if (s.isEmpty()) return s;
-        char c = s.charAt(0);
-        return "" + encodeChar(c, -shift);
+        return encodeString(s, -shift);
     }
 
 //    public String encodeKeith(String s) {
