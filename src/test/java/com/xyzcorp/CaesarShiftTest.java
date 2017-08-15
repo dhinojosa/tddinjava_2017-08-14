@@ -15,8 +15,6 @@ public class CaesarShiftTest {
 	//Inputs: String (string to be encoded), int (shift)
 	//Output: String (string that has encoded)
 
-
-
 	@Test
 	public void testEmptyStringWithShiftOf0() {
 		CaesarShift cs = new CaesarShift(0);
@@ -113,8 +111,58 @@ public class CaesarShiftTest {
 		CaesarShift cs = new CaesarShift(1);
 		assertThat(cs.encode("!")).isEqualTo("!");
 	}
-	
-	//negative
+
+	//GreenBar
+	@Test
+	public void testNegativeOfSmallBNegativeShiftOf1() {
+		CaesarShift cs = new CaesarShift(-1);
+        assertThat(cs.encode("b")).isEqualTo("a");
+	}
+
+	@Test
+	public void testNegativeOfSmallANegativeShiftOf1() {
+		CaesarShift cs = new CaesarShift(-1);
+		assertThat(cs.encode("a")).isEqualTo("z");
+	}
+
 	//test more than 1 character
 	//decode
+
+	@Test
+	public void testDecodeEmptyStringWithShiftOf0() {
+		CaesarShift cs = new CaesarShift(0);
+		assertThat(cs.decode("")).isEqualTo("");
+	}
+
+	@Test
+	public void testOneCharWithDecodeShiftOf0() {
+		CaesarShift cs = new CaesarShift(0);
+		assertThat(cs.decode("a")).isEqualTo("a");
+	}
+
+	@Test
+	public void testOneCharDecodeShiftOf1() {
+		CaesarShift cs = new CaesarShift(1);
+		assertThat(cs.decode("b")).isEqualTo("a");
+	}
+
+	@Test
+	public void testThatStringIsNullDecodeUsingAssertJFunctionRightWay() {
+		CaesarShift cs = new CaesarShift(1);
+		assertThatThrownBy(() -> cs.decode(null))
+				.hasMessage(CaesarShift.THE_STRING_CANNOT_BE_NULL_MSG)
+				.isInstanceOf(NullPointerException.class);
+	}
+
+	@Test
+	public void testUpperCaseADecodeWithAShiftOf1() {
+		CaesarShift cs = new CaesarShift(1);
+		assertThat(cs.decode("A")).isEqualTo("Z");
+	}
+
+	@Test
+	public void testDecodeSpecialCharacterWithAShiftOf1() {
+		CaesarShift cs = new CaesarShift(1);
+		assertThat(cs.decode("!")).isEqualTo("!");
+	}
 }

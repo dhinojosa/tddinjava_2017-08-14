@@ -11,13 +11,24 @@ public class CaesarShift {
         this.shift = shift;
     }
 
+    public char encodeChar(char c, int actualShift) {
+        if (!Character.isAlphabetic(c)) return c;
+        char BEST_A = Character.isUpperCase(c) ? 'A' : 'a';
+        return (char)((c + actualShift % 26 + 26 - BEST_A) % 26 + BEST_A);
+    }
+
     public String encode(String s) {
         Objects.requireNonNull(s, THE_STRING_CANNOT_BE_NULL_MSG);
         if (s.isEmpty()) return s;
-		char c = s.charAt(0);
-		if (!Character.isAlphabetic(c)) return s;
-		char BEST_A = Character.isUpperCase(c) ? 'A' : 'a';
-		return "" + (char)(BEST_A + (c + shift - BEST_A) % 26);
+        char c = s.charAt(0);
+        return "" + encodeChar(c, shift);
+    }
+
+    public String decode(String s) {
+        Objects.requireNonNull(s, THE_STRING_CANNOT_BE_NULL_MSG);
+        if (s.isEmpty()) return s;
+        char c = s.charAt(0);
+        return "" + encodeChar(c, -shift);
     }
 
 //    public String encodeKeith(String s) {
